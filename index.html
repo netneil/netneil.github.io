@@ -1,30 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hola Mundo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hola Mundo PWA</title>
 
   <!-- Manifest -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ffffff"/>
 
-  <!-- Icono para móvil -->
-  <link rel="apple-touch-icon" href="icon.png">
-
-  <!-- Forzar pantalla completa en iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <!-- Color de la barra de estado en Android -->
+  <meta name="theme‑color" content="#2F3BA2">
 </head>
 <body>
-  <h1 style="text-align: center; margin-top: 50vh;">Hola mundo</h1>
+  <h1>¡Hola Mundo!</h1>
 
   <script>
     // Registrar el Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
+      navigator.serviceWorker.register('/sw.js')
         .then(() => console.log('Service Worker registrado'))
-        .catch(e => console.error('Error al registrar SW:', e));
+        .catch(err => console.error('Error SW:', err));
     }
   </script>
 </body>
