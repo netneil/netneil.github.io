@@ -1,26 +1,163 @@
+<!-- File: index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hola Mundo PWA</title>
-
-  <!-- Manifest -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA UI Replica</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json">
-
-  <!-- Color de la barra de estado en Android -->
-  <meta name="theme‑color" content="#2F3BA2">
 </head>
 <body>
-  <h1>¡Hola Mundo!</h1>
-
+  <div class="card">
+    <div class="card-header">
+      <img src="https://via.placeholder.com/600x300?text=Imagen+Pack+Sorpresa" alt="Pack Sorpresa">
+      <div class="overlay top-left">Por tiempo limitado</div>
+      <div class="icon back">&#8592;</div>
+      <div class="icon share">&#x1f4e4;</div>
+      <div class="icon favorite">&#10084;</div>
+    </div>
+    <div class="card-body">
+      <h1>Bobo Tea - San Vicente del Raspeig</h1>
+      <div class="item">
+        <span class="label">Pack Sorpresa</span>
+        <span class="price">
+          <small>12,00 €</small>
+          4,20 €
+        </span>
+      </div>
+      <div class="item">
+        <span class="stars">★★★★☆</span>
+        <span class="rating">4,2 (58)</span>
+      </div>
+      <div class="item">
+        <span class="clock">🕒 Recogida: 20:30 - 21:00</span>
+        <span class="today">Hoy</span>
+      </div>
+      <div class="item address">C/ Alicante, 45, 03690 Sant Vicent del Raspeig</div>
+      <h2>Sobre el establecimiento</h2>
+      <p>Salva un pack sorpresa con deliciosos productos de panadería, bollería dulce ó salada.</p>
+      <button class="link">Ingredientes y Alérgenos</button>
+      <h2>Qué piensan otros usuarios</h2>
+      <div class="item big-rating">4,2 / 5,0</div>
+      <div class="timer">34:41 minutos para reservar</div>
+      <button class="reserve">Reservar</button>
+    </div>
+  </div>
   <script>
-    // Registrar el Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker registrado'))
-        .catch(err => console.error('Error SW:', err));
+      navigator.serviceWorker.register('sw.js');
     }
   </script>
 </body>
 </html>
+
+<!-- File: style.css -->
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.card {
+  max-width: 400px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.card-header {
+  position: relative;
+}
+.card-header img {
+  width: 100%;
+  display: block;
+}
+.overlay.top-left {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(255,255,255,0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+.icon {
+  position: absolute;
+  background: rgba(255,255,255,0.8);
+  padding: 6px;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+.icon.back { top: 8px; left: 8px; }
+.icon.share { top: 8px; right: 48px; }
+.icon.favorite { top: 8px; right: 8px; }
+.card-body { padding: 1rem; }
+.card-body h1 { font-size: 1.25rem; margin: 0 0 0.5rem; }
+.item { display: flex; justify-content: space-between; margin: 0.5rem 0; }
+.label { font-weight: bold; }
+.price small { text-decoration: line-through; margin-right: 0.5rem; }
+.stars { color: #f5a623; }
+.clock, .address { font-size: 0.9rem; }
+.today { background: #4caf50; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+h2 { font-size: 1rem; margin-top: 1rem; }
+.link {
+  background: none;
+  border: none;
+  color: #2a7ae2;
+  padding: 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.big-rating {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+.timer {
+  text-align: center;
+  background: #ffe0e0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.reserve {
+  width: 100%;
+  padding: 0.75rem;
+  background: #006639;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* File: manifest.json */
+{
+  "name": "UI Replica PWA",
+  "short_name": "Replica",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#006639",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
+
+/* File: sw.js */
+const CACHE = 'ui-replica-v1';
+const FILES = ['/', '/index.html', '/style.css', '/manifest.json'];
+self.addEventListener('install', evt => {
+  evt.waitUntil(
+    caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting())
+  );
+});
+self.addEventListener('fetch', evt => {
+  evt.respondWith(caches.match(evt.request).then(res => res || fetch(evt.request)));
+});
