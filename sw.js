@@ -1,23 +1,10 @@
-const CACHE_NAME = 'cache-v1';
-const URLS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(URLS_TO_CACHE))
-      .then(() => self.skipWaiting())
+const CACHE = 'ui-replica-v1';
+const FILES = ['/', '/index.html', '/style.css', '/manifest.json'];
+self.addEventListener('install', evt => {
+  evt.waitUntil(
+    caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting())
   );
 });
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(r => r || fetch(event.request))
-  );
+self.addEventListener('fetch', evt => {
+  evt.respondWith(caches.match(evt.request).then(res => res || fetch(evt.request)));
 });
