@@ -1,64 +1,137 @@
-<!-- File: index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Too Good To Go</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Tu Pedido - Too Good To Go</title>
 
-  <!-- PWA Android/Chrome -->
   <link rel="manifest" href="manifest.json">
-
-  <!-- iOS PWA support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Too Good To Go">
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
 
-  <!-- estilos -->
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div class="card">
-    <div class="card-header">
-      <img src="https://i0.wp.com/bacidangelo-shop.com/wp-content/uploads/2021/04/surtido-bolleria-1.jpg" alt="Pack Sorpresa">
-      <div class="overlay top-left">Por tiempo limitado</div>
-      <div class="icon back">&#8592;</div>
-      <div class="icon share">&#x1f4e4;</div>
-      <div class="icon favorite">&#10084;</div>
+  <div class="app-container">
+    <header class="app-header">
+      <button class="back-button" aria-label="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="#333333"/>
+        </svg>
+      </button>
+      <h1>Tu pedido</h1>
+    </header>
+
+    <div class="content-card"> <!-- Primera tarjeta: Información del establecimiento -->
+      <section class="establishment-info">
+        <div class="logo-placeholder">
+          <span class="logo-text">C</span>
+        </div>
+        <h2>Cafeson</h2>
+        <p class="address">C. Villafranqueza, 17, 03690 San Vicente del Raspeig, Alicante, España</p>
+        <a href="#" class="find-establishment-link">
+          Encontrar el establecimiento
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="location-icon">
+            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#00796B"/>
+          </svg>
+        </a>
+      </section>
     </div>
-    <div class="card-body">
-      <h1>Bobo Tea - San Vicente del Raspeig</h1>
-      <div class="item">
-        <span class="label">Pack Sorpresa</span>
-        <span class="price">
-          <small>12,00 €</small>
-          4,20 €
-        </span>
+
+    <div class="content-card"> <!-- Segunda tarjeta: Detalles del pedido y botón -->
+      <section class="order-details">
+        <div class="tabs">
+          <button class="tab active">Estoy recogiéndolo</button>
+          <button class="tab">Pedirle a un amigo</button>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="label">FECHA</span>
+            <span class="value">23 de mayo de 2025</span>
+          </div>
+          <div class="detail-item text-right"> <!-- Clase añadida para alineación -->
+            <span class="label">HORARIO DE RECOGIDA</span>
+            <span class="value">20:30 - 21:00</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">PACK SORPRESA</span>
+            <span class="value">1 x</span>
+          </div>
+          <div class="detail-item total-item"> <!-- Ya tiene clase para alineación -->
+            <span class="label">TOTAL</span>
+            <span class="value price">2,99 €</span>
+          </div>
+        </div>
+
+        <div class="packaging-info">
+          <span class="label">ENVASE</span>
+          <p>El establecimiento te proporcionará el recipiente para tu comida, pero debes traer tu propia bolsa para llevarte el pack a casa.</p>
+        </div>
+      </section>
+      <button class="pickup-button">Pulsar para recoger</button>
+    </div>
+
+    <footer class="help-section">
+      <div class="help-icon-container">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 18H13V16H11V18ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 6C9.79 6 8 7.79 8 10H10C10 8.9 10.9 8 12 8C13.1 8 14 8.9 14 10C14 12 11 11.75 11 15H13C13 12.75 16 12.5 16 10C16 7.79 14.21 6 12 6Z" fill="#00796B"/>
+        </svg>
       </div>
-      <div class="item">
-        <span class="stars">★★★★☆</span>
-        <span class="rating">4,2 (58)</span>
+      <a href="#">¿Necesitas ayuda?</a>
+    </footer>
+  </div>
+
+  <div class="modal-overlay" id="pickupModalOverlay"></div>
+
+  <!-- Modal de recogida -->
+  <div class="pickup-modal" id="pickupModalContainer">
+    <div class="modal-header-drag-area" id="modalDragHeader"></div> <!-- Área para arrastrar y cerrar (opcional) -->
+    <button class="modal-close-btn" id="closePickupModalBtn" aria-label="Cerrar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="#555555"/></svg>
+    </button>
+    <div class="modal-content-pickup">
+      <h2>Pedido para recoger</h2>
+      <div class="modal-pack-icon">1x</div>
+      <p class="modal-pack-name">Pack Sorpresa</p>
+      <p class="modal-establishment-name">Cafeson - San Vicente del Raspeig</p>
+      <div class="modal-pickup-code">X6FC899P9FSQ0</div>
+      <p class="modal-instructions">
+        Muestra el botón al personal del establecimiento para deslizarlo. Asegúrate de deslizarlo solamente cuando estés en el establecimiento y tu pack esté listo para llevar.
+      </p>
+      <div class="slider-pickup-container" id="pickupSliderContainer">
+        <div class="slider-pickup-track">
+          <div class="slider-pickup-thumb" id="pickupSliderThumb">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.59003 16.59L13.17 12L8.59003 7.41L10 6L16 12L10 18L8.59003 16.59Z" fill="white"/></svg>
+          </div>
+          <span class="slider-pickup-text">Deslizar tras la recogida</span>
+        </div>
       </div>
-      <div class="item">
-        <span class="clock">🕒 Recogida: 20:30 - 21:00</span>
-        <span class="today">Hoy</span>
-      </div>
-      <div class="item address">C/ Alicante, 45, 03690 Sant Vicent del Raspeig</div>
-      <h2>Sobre el establecimiento</h2>
-      <p>Salva un pack sorpresa con deliciosos productos de panadería, bollería dulce ó salada.</p>
-      <button class="link">Ingredientes y Alérgenos</button>
-      <h2>Qué piensan otros usuarios</h2>
-      <div class="item big-rating">4,2 / 5,0</div>
-      <div class="timer">34:41 minutos para reservar</div>
-      <button class="reserve">Reservar</button>
     </div>
   </div>
+
+  <div class="thank-you-screen" id="thankYouScreen">
+    <div class="thank-you-content">
+      <svg class="thank-you-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="#00796B"/>
+      </svg>
+      <h1>¡Gracias por tu compra!</h1>
+      <p>Tu pedido ha sido recogido con éxito.</p>
+      <button class="thank-you-close-btn" id="closeThankYouScreenBtn">Entendido</button>
+    </div>
+  </div>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
   </script>
+  <script src="script.js"></script> <!-- Nuevo archivo JavaScript -->
 </body>
 </html>
