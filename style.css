@@ -1,82 +1,562 @@
-body {
+/* General Reset and Body */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #333;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #f8f8f8;
+  color: #333333;
   display: flex;
-  justify-content: center;
-  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px 0;
+
+  /* Para evitar la selección de texto */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge */
+  user-select: none;         /* Estándar */
+
+  /* Opcional: Para evitar el "tap highlight" en móviles (el recuadro que aparece al tocar) */
+  -webkit-tap-highlight-color: transparent;
 }
-.card {
-  max-width: 400px;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.card-header {
-  position: relative;
-}
-.card-header img {
+
+.app-container {
   width: 100%;
-  display: block;
+  max-width: 420px; /* El ancho visual máximo del contenido principal */
+  margin: 0 auto; /* Centra el app-container si body no lo hace, o por redundancia */
+  padding: 0 16px; /* Padding lateral DENTRO del app-container */ /* <--- CAMBIO CLAVE */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espacio entre header, tarjetas y footer */
+  /* box-sizing: border-box; ya está en * */
 }
-.overlay.top-left {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: rgba(255,255,255,0.8);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.8rem;
+
+/* App Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  /* padding: 10px 16px;  Antiguo padding */
+  padding: 10px 0; /* Nuevo: Padding vertical sí, horizontal no (lo da app-container) */ /* <--- CAMBIO CLAVE */
+  width: 100%; /* Ocupa el ancho disponible dentro de app-container (que ya tiene padding) */
+  background-color: #f8f8f8; /* Mismo fondo que el body, para que el padding del container se vea uniforme */
 }
-.icon {
-  position: absolute;
-  background: rgba(255,255,255,0.8);
-  padding: 6px;
-  border-radius: 50%;
-  font-size: 1rem;
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  flex-grow: 1;
+  color: #222222;
+  /* Ajuste del margen derecho para balancear el botón de retroceso.
+     Si el botón de retroceso tiene un ancho (ej. 24px) y no hay padding lateral
+     en el header mismo, este margen puede ser necesario para centrar el título.
+     Si el botón tiene padding, puede que no sea necesario.
+     Probaremos con el mismo valor que antes. */
+  margin-right: 24px;
 }
-.icon.back { top: 8px; left: 8px; }
-.icon.share { top: 8px; right: 48px; }
-.icon.favorite { top: 8px; right: 8px; }
-.card-body { padding: 1rem; }
-.card-body h1 { font-size: 1.25rem; margin: 0 0 0.5rem; }
-.item { display: flex; justify-content: space-between; margin: 0.5rem 0; }
-.label { font-weight: bold; }
-.price small { text-decoration: line-through; margin-right: 0.5rem; }
-.stars { color: #f5a623; }
-.clock, .address { font-size: 0.9rem; }
-.today { background: #4caf50; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
-h2 { font-size: 1rem; margin-top: 1rem; }
-.link {
+
+.back-button {
   background: none;
   border: none;
-  color: #2a7ae2;
   padding: 0;
-  font-size: 0.9rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.big-rating {
-  font-size: 1.5rem;
+
+.back-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Solo para asegurar que content-card usa el 100% del espacio que le deja app-container */
+.content-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  padding: 20px; /* Padding interno de la tarjeta */
+  width: 100%; /* Ocupa el ancho disponible dentro de app-container (que ya tiene su padding lateral) */
+  /* box-sizing: border-box; ya está en * */
+}
+
+/* Establishment Info Section (dentro de la primera content-card) */
+.establishment-info {
+  text-align: center;
+  /* padding-bottom y border-bottom eliminados ya que ahora son tarjetas separadas */
+}
+
+.logo-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #6d4c41;
+  color: #f5f5dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+  font-size: 2rem;
   font-weight: bold;
-  text-align: center;
 }
-.timer {
-  text-align: center;
-  background: #ffe0e0;
-  padding: 0.5rem;
-  border-radius: 4px;
-  margin: 1rem 0;
+
+.establishment-info h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #222222;
+}
+
+.establishment-info .address {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.find-establishment-link {
   font-size: 0.9rem;
+  color: #00796B;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
 }
-.reserve {
-  width: 100%;
-  padding: 0.75rem;
-  background: #006639;
-  color: #fff;
+
+.find-establishment-link .location-icon {
+  margin-left: 6px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Order Details Section (dentro de la segunda content-card) */
+.order-details {
+  /* margin-bottom: 24px; para separar del botón pickup, ahora el botón tiene margin-top */
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eeeeee; /* Línea divisoria debajo de las pestañas */
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 8px;
+  background: none;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-bottom: 3px solid transparent;
+  font-size: 0.9rem;
+  color: #666666;
   cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab.active {
+  color: #00796B;
+  border-bottom-color: #00796B;
+  font-weight: 700;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 10px; /* Ajustado gap horizontal para mejor encaje */
+  margin-bottom: 20px;
+}
+
+.detail-item .label {
+  display: block;
+  font-size: 0.75rem;
+  color: #757575;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.detail-item .value {
+  font-size: 0.9rem; /* ~14.4px */
+  font-weight: 500;
+  color: #333333;
+}
+
+/* Clase para alinear items a la derecha en la grid */
+.detail-item.text-right {
+  text-align: right;
+}
+.detail-item.text-right .label { /* Asegura que el label también se alinee */
+  text-align: right;
+}
+
+.total-item { /* Ya estaba, pero verificado */
+  text-align: right;
+}
+.total-item .label {
+  text-align: right;
+}
+.total-item .value.price {
+  /* font-size: 1.2rem; Antiguo valor */
+  /* font-weight: 700; Antiguo valor */
+  font-size: 0.9rem; /* <--- CAMBIO: Mismo tamaño que otros valores */
+  font-weight: 500; /* <--- CAMBIO: Mismo peso que otros valores */
+  color: #222222; /* Mantenemos un color ligeramente más oscuro para el precio si es necesario */
+}
+
+.packaging-info {
+  margin-top: 4px; /* Pequeño ajuste de espacio si es necesario */
+}
+.packaging-info .label {
+  display: block;
+  font-size: 0.75rem;
+  color: #757575;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.packaging-info p {
+  font-size: 0.875rem;
+  color: #555555;
+  line-height: 1.5;
+}
+
+/* Pickup Button (dentro de la segunda content-card) */
+.pickup-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #006055;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px; /* Esquinas muy redondeadas */
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 24px; /* Espacio entre detalles del pedido y el botón */
+}
+
+.pickup-button:hover {
+  background-color: #004c40;
+}
+
+/* Help Section (fuera de las tarjetas, al final del app-container) */
+.help-section {
+  display: flex;
+  flex-direction: column; /* <--- CAMBIO: Apila los elementos verticalmente */
+  align-items: center;    /* <--- CAMBIO: Centra los elementos horizontalmente en la columna */
+  justify-content: center;
+  padding-bottom: 16px;
+  /* gap: 4px; o usar margin en el icono, como abajo */
+}
+
+.help-icon-container {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-right: 8px; Antiguo valor */
+  margin-bottom: 6px; /* <--- CAMBIO: Espacio debajo del icono, antes de texto */
+}
+
+.help-icon-container svg {
+  width: 16px;
+  height: 16px;
+}
+.help-icon-container svg path {
+    fill: #00796B;
+}
+
+.help-section a {
+  font-size: 0.9rem;
+  color: #00796B;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Sombreado */
+  z-index: 998; /* Detrás del modal */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s 0.3s linear;
+}
+.modal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, visibility 0s 0s linear;
+}
+
+/* Pickup Modal */
+.pickup-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 500px; /* Para que no sea excesivamente ancho en desktop */
+  margin: 0 auto; /* Centrar si max-width se aplica */
+  background-color: #ffffff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  max-height: 75vh; /* Un poco más de la mitad de la pantalla */
+  display: flex;
+  flex-direction: column;
+}
+.pickup-modal.visible {
+  transform: translateY(0%);
+}
+
+/* Opcional: un área pequeña arriba para agarrar y deslizar para cerrar */
+.modal-header-drag-area {
+  width: 50px;
+  height: 5px;
+  background-color: #ccc;
+  border-radius: 2.5px;
+  margin: 8px auto 0 auto; /* Espacio y centrado */
+  /* cursor: grab; /* Si implementas drag para cerrar */
+}
+
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 10; /* Para estar encima del contenido scrolleable */
+}
+.modal-close-btn svg {
+  display: block;
+}
+
+.modal-content-pickup {
+  padding: 20px 24px 24px 24px; /* Mas padding abajo para el slider */
+  text-align: center;
+  overflow-y: auto; /* Scroll si el contenido excede max-height */
+  flex-grow: 1;
+}
+
+.modal-content-pickup h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 10px; /* Espacio si no hay drag-area o para separarse del close button */
+  margin-bottom: 20px;
+}
+
+.modal-pack-icon {
+  width: 48px;
+  height: 48px;
+  background-color: #00796B; /* Teal principal */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 auto 10px auto;
+}
+
+.modal-pack-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.modal-establishment-name {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.modal-pickup-code {
+  display: inline-block;
+  background-color: #00796B; /* Teal principal */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.modal-instructions {
+  font-size: 0.875rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 28px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Slider de recogida */
+.slider-pickup-container {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  padding-bottom: 10px; /* Espacio extra abajo del slider */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.slider-pickup-track {
+  height: 56px;
+  background-color: #f0f0f0;
+  border: 2px solid #006055;
+  border-radius: 28px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.slider-pickup-thumb {
+  width: 48px; /* Original width */
+  height: 50px; /* Slightly taller to fill more of the 52px inner track height */
+  background-color: #006055;
+  border-radius: 25px; /* To match new height for perfect circle appearance if width=height */
+  /* If keeping width 48 and height 50, use border-radius: 24px / 25px or just a large value like 50% */
+  /* Let's keep it a circle for simplicity and match original screenshot closer */
+  /* Reverting height to 48px, and radius to 50% for a circle */
+  height: 48px;
+  border-radius: 50%; /* Perfect circle */
+
+  position: absolute;
+  left: 2px; /* MODIFIED: Start 2px from left edge (track's border width) */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.slider-pickup-text {
+  flex-grow: 1;         /* Hace que el span ocupe el espacio horizontal disponible en el track */
+  text-align: center;   /* Centra el contenido del texto dentro del span */
+  font-size: 0.95rem;
+  color: #006055;       /* Color del texto igual al del círculo */
+  font-weight: bold;    /* Texto en negrita */
+  z-index: 1;           /* Se asegura que esté detrás del círculo (thumb) si hay superposición */
+
+  /* Padding simétrico (u omitirlo si el track ya gestiona el espaciado interno)
+     Este padding es para el "aire" alrededor del texto, no para su lógica de centrado.
+     El centrado se logra con flex-grow y text-align: center.
+  */
+  padding: 0 8px;       /* Ej: 0 padding vertical, 8px padding horizontal a cada lado del texto.
+                           Puedes ajustar el '8px' o ponerlo a '0' si lo prefieres. */
+
+  /* Asegúrate de que no haya propiedades como min-width, max-width, o position: absolute
+     (a menos que sea parte de una estrategia de centrado diferente) que puedan interferir.
+     Con la estructura actual (thumb absoluto, texto como hijo flex del track), esto debería funcionar.
+  */
+}
+
+
+
+
+.slider-pickup-container.completed .slider-pickup-text {
+  opacity: 0; /* This will use the JS-re-enabled transition when class is added */
+}
+
+.slider-pickup-container.completed .slider-pickup-thumb {
+  background-color: #00796b; /* Verde acento */
+}
+.slider-pickup-container.completed .slider-pickup-text {
+  opacity: 0; /* Ocultar texto al completar */
+}
+/* Pantalla de Agradecimiento */
+.thank-you-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Encima de todo lo demás */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s 0.3s linear;
+}
+
+.thank-you-screen.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, visibility 0s 0s linear;
+}
+
+.thank-you-content {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+  max-width: 380px;
+  width: 90%;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.thank-you-screen.visible .thank-you-content {
+  transform: scale(1);
+}
+
+.thank-you-icon {
+  margin-bottom: 15px;
+}
+
+.thank-you-content h1 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.thank-you-content p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.thank-you-close-btn {
+  background-color: #00796B; /* Verde acento */
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.thank-you-close-btn:hover {
+  background-color: #006055; /* Verde más oscuro */
 }
