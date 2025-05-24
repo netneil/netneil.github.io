@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 16px 0;
+  /* padding: 16px 0; No es necesario si pre-menu ocupa todo */
 
   /* Para evitar la selección de texto */
   -webkit-user-select: none; /* Safari */
@@ -21,29 +21,112 @@ body {
   -ms-user-select: none;     /* Internet Explorer/Edge */
   user-select: none;         /* Estándar */
 
-  /* Opcional: Para evitar el "tap highlight" en móviles (el recuadro que aparece al tocar) */
+  /* Opcional: Para evitar el "tap highlight" en móviles */
   -webkit-tap-highlight-color: transparent;
 }
 
-.app-container {
-  width: 100%;
-  max-width: 420px; /* El ancho visual máximo del contenido principal */
-  margin: 0 auto; /* Centra el app-container si body no lo hace, o por redundancia */
-  padding: 0 16px; /* Padding lateral DENTRO del app-container */ /* <--- CAMBIO CLAVE */
-  display: flex;
-  flex-direction: column;
-  gap: 16px; /* Espacio entre header, tarjetas y footer */
-  /* box-sizing: border-box; ya está en * */
+/* Clase para ocultar elementos */
+.hidden {
+  display: none !important;
 }
 
-/* App Header */
+/* Estilos del Pre-Menú */
+.pre-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+  padding: 20px;
+  background-color: #f8f8f8; /* Mismo fondo que el body general */
+}
+
+.pre-menu-card {
+  background-color: #ffffff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.pre-menu-card h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: #00796B;
+  box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.2);
+}
+
+.pre-menu-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #006055;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.pre-menu-submit-btn:hover {
+  background-color: #004c40;
+}
+
+
+/* Estilos del App Container Principal */
+.app-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 16px; /* Padding lateral DENTRO del app-container */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px; /* Añadido para espacio arriba cuando es visible */
+  padding-bottom: 16px; /* Añadido para espacio abajo cuando es visible */
+}
+
 .app-header {
   display: flex;
   align-items: center;
-  /* padding: 10px 16px;  Antiguo padding */
-  padding: 10px 0; /* Nuevo: Padding vertical sí, horizontal no (lo da app-container) */ /* <--- CAMBIO CLAVE */
-  width: 100%; /* Ocupa el ancho disponible dentro de app-container (que ya tiene padding) */
-  background-color: #f8f8f8; /* Mismo fondo que el body, para que el padding del container se vea uniforme */
+  padding: 10px 0;
+  width: 100%;
+  background-color: #f8f8f8;
 }
 
 .app-header h1 {
@@ -52,11 +135,6 @@ body {
   text-align: center;
   flex-grow: 1;
   color: #222222;
-  /* Ajuste del margen derecho para balancear el botón de retroceso.
-     Si el botón de retroceso tiene un ancho (ej. 24px) y no hay padding lateral
-     en el header mismo, este margen puede ser necesario para centrar el título.
-     Si el botón tiene padding, puede que no sea necesario.
-     Probaremos con el mismo valor que antes. */
   margin-right: 24px;
 }
 
@@ -75,20 +153,16 @@ body {
   height: 24px;
 }
 
-/* Solo para asegurar que content-card usa el 100% del espacio que le deja app-container */
 .content-card {
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 20px; /* Padding interno de la tarjeta */
-  width: 100%; /* Ocupa el ancho disponible dentro de app-container (que ya tiene su padding lateral) */
-  /* box-sizing: border-box; ya está en * */
+  padding: 20px;
+  width: 100%;
 }
 
-/* Establishment Info Section (dentro de la primera content-card) */
 .establishment-info {
   text-align: center;
-  /* padding-bottom y border-bottom eliminados ya que ahora son tarjetas separadas */
 }
 
 .logo-placeholder {
@@ -134,15 +208,14 @@ body {
   height: 18px;
 }
 
-/* Order Details Section (dentro de la segunda content-card) */
 .order-details {
-  /* margin-bottom: 24px; para separar del botón pickup, ahora el botón tiene margin-top */
+  /* No specific styles needed here for now */
 }
 
 .tabs {
   display: flex;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eeeeee; /* Línea divisoria debajo de las pestañas */
+  border-bottom: 1px solid #eeeeee;
 }
 
 .tab {
@@ -168,7 +241,7 @@ body {
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 10px; /* Ajustado gap horizontal para mejor encaje */
+  gap: 16px 10px;
   margin-bottom: 20px;
 }
 
@@ -181,35 +254,32 @@ body {
 }
 
 .detail-item .value {
-  font-size: 0.9rem; /* ~14.4px */
+  font-size: 0.9rem;
   font-weight: 500;
   color: #333333;
 }
 
-/* Clase para alinear items a la derecha en la grid */
 .detail-item.text-right {
   text-align: right;
 }
-.detail-item.text-right .label { /* Asegura que el label también se alinee */
+.detail-item.text-right .label {
   text-align: right;
 }
 
-.total-item { /* Ya estaba, pero verificado */
+.total-item {
   text-align: right;
 }
 .total-item .label {
   text-align: right;
 }
 .total-item .value.price {
-  /* font-size: 1.2rem; Antiguo valor */
-  /* font-weight: 700; Antiguo valor */
-  font-size: 0.9rem; /* <--- CAMBIO: Mismo tamaño que otros valores */
-  font-weight: 500; /* <--- CAMBIO: Mismo peso que otros valores */
-  color: #222222; /* Mantenemos un color ligeramente más oscuro para el precio si es necesario */
+  font-size: 0.9rem; /* Adjusted to match other values */
+  font-weight: 500; /* Adjusted to match other values */
+  color: #222222;
 }
 
 .packaging-info {
-  margin-top: 4px; /* Pequeño ajuste de espacio si es necesario */
+  margin-top: 4px;
 }
 .packaging-info .label {
   display: block;
@@ -225,33 +295,30 @@ body {
   line-height: 1.5;
 }
 
-/* Pickup Button (dentro de la segunda content-card) */
 .pickup-button {
   width: 100%;
   padding: 14px;
   background-color: #006055;
   color: #ffffff;
   border: none;
-  border-radius: 30px; /* Esquinas muy redondeadas */
+  border-radius: 30px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
-  margin-top: 24px; /* Espacio entre detalles del pedido y el botón */
+  margin-top: 24px;
 }
 
 .pickup-button:hover {
   background-color: #004c40;
 }
 
-/* Help Section (fuera de las tarjetas, al final del app-container) */
 .help-section {
   display: flex;
-  flex-direction: column; /* <--- CAMBIO: Apila los elementos verticalmente */
-  align-items: center;    /* <--- CAMBIO: Centra los elementos horizontalmente en la columna */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   padding-bottom: 16px;
-  /* gap: 4px; o usar margin en el icono, como abajo */
 }
 
 .help-icon-container {
@@ -262,8 +329,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* margin-right: 8px; Antiguo valor */
-  margin-bottom: 6px; /* <--- CAMBIO: Espacio debajo del icono, antes de texto */
+  margin-bottom: 6px;
 }
 
 .help-icon-container svg {
@@ -288,8 +354,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Sombreado */
-  z-index: 998; /* Detrás del modal */
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 998;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0s 0.3s linear;
@@ -307,8 +373,8 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  max-width: 500px; /* Para que no sea excesivamente ancho en desktop */
-  margin: 0 auto; /* Centrar si max-width se aplica */
+  max-width: 500px;
+  margin: 0 auto;
   background-color: #ffffff;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -316,7 +382,7 @@ body {
   z-index: 999;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  max-height: 75vh; /* Un poco más de la mitad de la pantalla */
+  max-height: 75vh;
   display: flex;
   flex-direction: column;
 }
@@ -324,16 +390,13 @@ body {
   transform: translateY(0%);
 }
 
-/* Opcional: un área pequeña arriba para agarrar y deslizar para cerrar */
 .modal-header-drag-area {
   width: 50px;
   height: 5px;
   background-color: #ccc;
   border-radius: 2.5px;
-  margin: 8px auto 0 auto; /* Espacio y centrado */
-  /* cursor: grab; /* Si implementas drag para cerrar */
+  margin: 8px auto 0 auto;
 }
-
 
 .modal-close-btn {
   position: absolute;
@@ -343,30 +406,30 @@ body {
   border: none;
   cursor: pointer;
   padding: 5px;
-  z-index: 10; /* Para estar encima del contenido scrolleable */
+  z-index: 10;
 }
 .modal-close-btn svg {
   display: block;
 }
 
 .modal-content-pickup {
-  padding: 20px 24px 24px 24px; /* Mas padding abajo para el slider */
+  padding: 20px 24px 24px 24px;
   text-align: center;
-  overflow-y: auto; /* Scroll si el contenido excede max-height */
+  overflow-y: auto;
   flex-grow: 1;
 }
 
 .modal-content-pickup h2 {
   font-size: 1.2rem;
   font-weight: 700;
-  margin-top: 10px; /* Espacio si no hay drag-area o para separarse del close button */
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
 .modal-pack-icon {
   width: 48px;
   height: 48px;
-  background-color: #00796B; /* Teal principal */
+  background-color: #00796B;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -391,7 +454,7 @@ body {
 
 .modal-pickup-code {
   display: inline-block;
-  background-color: #00796B; /* Teal principal */
+  background-color: #00796B;
   color: white;
   font-size: 1.1rem;
   font-weight: bold;
@@ -416,7 +479,7 @@ body {
   width: 100%;
   max-width: 360px;
   margin: 0 auto;
-  padding-bottom: 10px; /* Espacio extra abajo del slider */
+  padding-bottom: 10px;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -432,20 +495,17 @@ body {
   overflow: hidden;
   cursor: grab;
 }
+.slider-pickup-track.dragging, .slider-pickup-track:active {
+  cursor: grabbing;
+}
 
 .slider-pickup-thumb {
-  width: 48px; /* Original width */
-  height: 50px; /* Slightly taller to fill more of the 52px inner track height */
-  background-color: #006055;
-  border-radius: 25px; /* To match new height for perfect circle appearance if width=height */
-  /* If keeping width 48 and height 50, use border-radius: 24px / 25px or just a large value like 50% */
-  /* Let's keep it a circle for simplicity and match original screenshot closer */
-  /* Reverting height to 48px, and radius to 50% for a circle */
+  width: 48px;
   height: 48px;
-  border-radius: 50%; /* Perfect circle */
-
+  background-color: #006055;
+  border-radius: 50%;
   position: absolute;
-  left: 2px; /* MODIFIED: Start 2px from left edge (track's border width) */
+  left: 2px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -454,41 +514,32 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   z-index: 2;
 }
+.slider-pickup-thumb svg {
+    width: 20px;
+    height: 20px;
+}
 
 .slider-pickup-text {
-  flex-grow: 1;         /* Hace que el span ocupe el espacio horizontal disponible en el track */
-  text-align: center;   /* Centra el contenido del texto dentro del span */
+  flex-grow: 1;
+  text-align: center;
   font-size: 0.95rem;
-  color: #006055;       /* Color del texto igual al del círculo */
-  font-weight: bold;    /* Texto en negrita */
-  z-index: 1;           /* Se asegura que esté detrás del círculo (thumb) si hay superposición */
-
-  /* Padding simétrico (u omitirlo si el track ya gestiona el espaciado interno)
-     Este padding es para el "aire" alrededor del texto, no para su lógica de centrado.
-     El centrado se logra con flex-grow y text-align: center.
-  */
-  padding: 0 8px;       /* Ej: 0 padding vertical, 8px padding horizontal a cada lado del texto.
-                           Puedes ajustar el '8px' o ponerlo a '0' si lo prefieres. */
-
-  /* Asegúrate de que no haya propiedades como min-width, max-width, o position: absolute
-     (a menos que sea parte de una estrategia de centrado diferente) que puedan interferir.
-     Con la estructura actual (thumb absoluto, texto como hijo flex del track), esto debería funcionar.
-  */
+  color: #006055;
+  font-weight: bold;
+  z-index: 1;
+  padding: 0 8px; /* Ajustado para centrado real */
 }
 
-
-
-
-.slider-pickup-container.completed .slider-pickup-text {
-  opacity: 0; /* This will use the JS-re-enabled transition when class is added */
+.slider-pickup-container.completed .slider-pickup-track {
+  background-color: #e6f7f4;
+  border-color: #00796b;
 }
-
 .slider-pickup-container.completed .slider-pickup-thumb {
-  background-color: #00796b; /* Verde acento */
+  background-color: #00796b;
 }
 .slider-pickup-container.completed .slider-pickup-text {
-  opacity: 0; /* Ocultar texto al completar */
+  opacity: 0;
 }
+
 /* Pantalla de Agradecimiento */
 .thank-you-screen {
   position: fixed;
@@ -496,11 +547,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000; /* Encima de todo lo demás */
+  z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0s 0.3s linear;
@@ -546,7 +597,7 @@ body {
 }
 
 .thank-you-close-btn {
-  background-color: #00796B; /* Verde acento */
+  background-color: #00796B;
   color: white;
   border: none;
   padding: 12px 30px;
@@ -558,5 +609,5 @@ body {
 }
 
 .thank-you-close-btn:hover {
-  background-color: #006055; /* Verde más oscuro */
+  background-color: #006055;
 }
